@@ -1,0 +1,184 @@
+---
+// src/components/FollowerGoal.astro
+interface Props {
+  month: string;
+  currentFollowers: number;
+  goalFollowers: number;
+  rewardText: string;
+}
+
+const { month, currentFollowers, goalFollowers, rewardText } = Astro.props;
+
+const progressPercentage = Math.min((currentFollowers / goalFollowers) * 100, 100);
+const goalReached = currentFollowers >= goalFollowers;
+---
+
+<div class="follower-goal-container">
+  <h3 class="month-title">Meta de Seguidores: {month}</h3>
+  <div class="stats">
+    <span class="current-followers">Actuales: {currentFollowers}</span>
+    <span class="goal-followers">Meta: {goalFollowers}</span>
+  </div>
+  <div class="progress-bar-container">
+    <div class="progress-bar" style={`width: ${progressPercentage}%;`}></div>
+  </div>
+  <div class="progress-percentage">{progressPercentage.toFixed(1)}%</div>
+
+  {goalReached && (
+    <div class="reward-section">
+      <p class="reward-text">¡Meta alcanzada! 🎉</p>
+      <p class="reward-description">{rewardText}</p>
+    </div>
+  )}
+  {!goalReached && currentFollowers > 0 && (
+     <p class="keep-going-text">¡Sigue así, casi llegamos!</p>
+  )}
+</div>
+
+<style>
+  .follower-goal-container {
+    background-color: var(--card-bg, #2c2c3e);
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    border: 1px solid var(--accent-neon-blue, #38bdf8);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .follower-goal-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(var(--accent-neon-blue-rgb, 56, 189, 248), 0.3);
+  }
+
+  .month-title {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-primary, #e0e0e0);
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, var(--accent-neon-pink, #f472b6), var(--accent-neon-blue, #38bdf8));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .stats {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.1rem;
+    color: var(--text-secondary, #b0b0b0);
+    margin-bottom: 15px;
+    font-weight: 500;
+  }
+
+  .current-followers,
+  .goal-followers {
+    padding: 5px 10px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .progress-bar-container {
+    width: 100%;
+    background-color: var(--bg-primary, #1e1e2e);
+    border-radius: 25px;
+    height: 25px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    border: 1px solid var(--accent-neon-blue, #38bdf8);
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-neon-pink, #f472b6), var(--accent-neon-blue, #38bdf8));
+    border-radius: 25px;
+    transition: width 0.8s ease-in-out;
+    box-shadow: 0 0 10px var(--accent-neon-blue, #38bdf8);
+  }
+
+  .progress-percentage {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--accent-neon-blue, #38bdf8);
+    margin-bottom: 20px;
+  }
+
+  .reward-section {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: rgba(var(--accent-neon-green-rgb, 52, 211, 153), 0.1);
+    border-radius: 10px;
+    border-left: 5px solid var(--accent-neon-green, #34d399);
+  }
+
+  .reward-text {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--accent-neon-green, #34d399);
+    margin-bottom: 8px;
+  }
+
+  .reward-description {
+    font-size: 1rem;
+    color: var(--text-secondary, #b0b0b0);
+  }
+
+  .keep-going-text {
+    font-size: 1rem;
+    color: var(--text-secondary, #b0b0b0);
+    margin-top: 15px;
+    font-style: italic;
+  }
+
+  /* Animaciones sutiles */
+  .month-title,
+  .stats span,
+  .progress-percentage,
+  .reward-text,
+  .reward-description,
+  .keep-going-text {
+    opacity: 0;
+    animation: fadeInItem 0.5s forwards;
+  }
+
+  .month-title { animation-delay: 0.1s; }
+  .stats span:nth-child(1) { animation-delay: 0.2s; }
+  .stats span:nth-child(2) { animation-delay: 0.3s; }
+  .progress-bar-container { 
+    opacity: 0;
+    transform: scaleX(0);
+    animation: scaleInX 0.6s forwards 0.4s;
+    transform-origin: left;
+  }
+  .progress-percentage { animation-delay: 1s; } /* Después de la barra */
+  .reward-section, .keep-going-text { animation-delay: 1.2s; }
+
+  @keyframes fadeInItem {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scaleInX {
+    from { opacity: 0; transform: scaleX(0); }
+    to { opacity: 1; transform: scaleX(1); }
+  }
+
+  @media (max-width: 768px) {
+    .follower-goal-container {
+      padding: 20px;
+    }
+    .month-title {
+      font-size: 1.4rem;
+    }
+    .stats {
+      font-size: 1rem;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .progress-bar-container {
+        height: 20px;
+    }
+  }
+</style>

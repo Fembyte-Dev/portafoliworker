@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro Basics</title>
+		<link rel="stylesheet" href="/src/styles/global.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<style>
+	html,
+	:root {
+		/* Paleta de colores - Modo oscuro (default) */
+		--bg-primary: #0d0d0d;
+		--bg-secondary: #161616;
+		--text-primary: #ffffff;
+		--text-secondary: #cccccc;
+		--accent-neon-pink: #ff00ff;
+		--accent-neon-blue: #00ffff;
+		--accent-neon-green: #00ff8b;
+		--accent-neon-purple: #9d00ff;
+		--card-bg: #1a1a1a;
+		--divider: #333333;
+
+		/* Espaciado */
+		--section-margin: 40px;
+		--paragraph-spacing: 20px;
+		--title-subtitle-spacing: 10px;
+		--button-padding: 10px;
+	}
+
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+		transition: all 0.3s ease;
+	}
+
+	body {
+		background-color: var(--bg-primary);
+		color: var(--text-primary);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 100vh;
+		padding: 20px;
+	}
+</style>

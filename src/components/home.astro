@@ -1,0 +1,338 @@
+---
+import StatsCounter from "./StatsCounter.astro";
+import FollowerGoal from "./FollowerGoal.astro";
+---
+
+<div id="container" class="container">
+	<header>
+		<div class="logo">Fem<span>byte</span></div>
+	</header>
+
+	<!-- Imagen de perfil con solo animación de zoom -->
+	<img src="/src/assets/fotos/foto.jpg" alt="Fembyte" class="profile-pic" />
+
+	<!-- Frase de presentación -->
+	<p class="bio-text">Hola, soy Fembyte, tu Desarrolladora Fullstack de Confianza
+	</p>
+
+	<h1>Mis redes sociales</h1>
+
+	<div class="links-container">
+		<a href="https://www.youtube.com/@FemByte" class="social-link" target="_blank">
+			<i class="fab fa-youtube"></i>
+			<span>Mi canal de YouTube</span>
+		</a>
+
+		<a href="https://www.tiktok.com/@techfemotoko" class="social-link" target="_blank">
+			<i class="fab fa-tiktok"></i>
+			<span>Sígueme en TikTok</span>
+		</a>
+
+		<a href="projects" class="social-link" target="_blank">
+			<i class="fab fa-github"></i>
+			<span>Proyectos en GitHub</span>
+		</a>
+	</div>
+
+	<!-- Botón Contrátame -->
+	<!-- <button class="hire-button">¡Contrátame!</button> -->
+
+	<!-- Contenedor de estadísticas -->
+	<!-- <StatsCounter stats={[
+		{ id: "projects-count", label: "Proyectos completados", target: 48 },
+		{ id: "videos-count", label: "Videos publicados", target: 136 },
+		{ id: "followers-count", label: "Seguidores totales", target: 25, suffix: "K" }
+	]} /> -->
+
+	<FollowerGoal
+        month="Mayo 2025"
+        currentFollowers={14500}
+        goalFollowers={25000}
+        rewardText="¡Curso de Cloudflare !"
+    />
+
+	
+</div>
+
+<style>
+	.container {
+		width: 100%;
+		max-width: 800px;
+		background-color: var(--bg-secondary);
+		border-radius: 15px;
+		padding: 30px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+		text-align: center;
+	}
+
+	header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 30px;
+	}
+
+	.logo {
+		font-family: "Montserrat", sans-serif;
+		font-size: 2rem;
+		font-weight: 700;
+		color: var(--text-primary);
+	}
+
+	.logo span {
+		color: var(--accent-neon-blue);
+	}
+
+	.theme-toggle {
+		background: none;
+		border: none;
+		color: var(--text-primary);
+		cursor: pointer;
+		font-size: 1.5rem;
+	}
+
+	.profile-pic {
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		margin: 0 auto 20px;
+		object-fit: cover;
+		border: 5px solid var(--bg-primary);
+		animation: zoomIn 1.5s ease forwards;
+		box-shadow: 0 0 20px var(--accent-neon-blue);
+	}
+
+	@keyframes zoomIn {
+		0% {
+			transform: scale(0);
+			opacity: 0;
+		}
+		60% {
+			transform: scale(1.2);
+			opacity: 1;
+		}
+		100% {
+			transform: scale(1);
+			opacity: 1;
+		}
+	}
+
+	.bio-text {
+		font-size: 1.2rem;
+		color: var(--text-secondary);
+		margin-bottom: 25px;
+		animation: fadeIn 2s;
+	}
+
+	h1 {
+		text-align: center;
+		margin-bottom: 25px;
+		color: var(--text-primary);
+		font-family: "Montserrat", sans-serif;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+		position: relative;
+		display: inline-block;
+	}
+
+	h1::after {
+		content: "";
+		position: absolute;
+		width: 50%;
+		height: 4px;
+		bottom: -5px;
+		left: 25%;
+		background: linear-gradient(
+			90deg,
+			var(--accent-neon-pink),
+			var(--accent-neon-blue)
+		);
+	}
+
+	.links-container {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		margin-bottom: 30px;
+	}
+
+	.social-link {
+		display: flex;
+		align-items: center;
+		padding: 15px 20px;
+		border-radius: 10px;
+		text-decoration: none;
+		color: var(--text-primary);
+		background-color: var(--card-bg);
+		transition: all 0.3s ease;
+		position: relative;
+		overflow: hidden;
+		opacity: 0;
+		transform-origin: top;
+		animation: swingIn 1s forwards;
+		border-left: 4px solid transparent;
+	}
+
+	.social-link::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 0;
+		height: 3px;
+		background: linear-gradient(
+			90deg,
+			var(--accent-neon-pink),
+			var(--accent-neon-blue)
+		);
+		transition: width 0.4s ease;
+		box-shadow: 0 0 8px 1px var(--accent-neon-pink);
+	}
+
+	.social-link:hover::after {
+		width: 100%;
+	}
+
+	.social-link i {
+		font-size: 24px;
+		margin-right: 15px;
+		width: 30px;
+		text-align: center;
+	}
+
+	.social-link:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+		border-left: 4px solid var(--accent-neon-pink);
+	}
+
+	/* Botón Contrátame */
+	.hire-button {
+		display: inline-block;
+		padding: 12px 30px;
+		background: linear-gradient(
+			45deg,
+			var(--accent-neon-green),
+			var(--accent-neon-blue)
+		);
+		color: var(--bg-primary);
+		border: none;
+		border-radius: 50px;
+		font-size: 1.1rem;
+		font-weight: bold;
+		cursor: pointer;
+		transition: all 0.3s ease;
+		box-shadow: 0 0 15px var(--accent-neon-blue);
+		animation: pulseButton 2s infinite;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+	}
+
+	.hire-button:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 0 20px var(--accent-neon-pink);
+		background: linear-gradient(
+			45deg,
+			var(--accent-neon-blue),
+			var(--accent-neon-pink)
+		);
+	}
+
+	/* Animaciones */
+	@keyframes swingIn {
+		0% {
+			transform: rotateX(-90deg);
+			opacity: 0;
+		}
+		60% {
+			transform: rotateX(20deg);
+		}
+		100% {
+			transform: rotateX(0);
+			opacity: 1;
+		}
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes pulseButton {
+		0% {
+			transform: scale(1);
+		}
+		50% {
+			transform: scale(1.05);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+
+	/* Retrasos para cada enlace */
+	.social-link:nth-child(1) {
+		animation-delay: 0.1s;
+		border-left-color: var(--accent-neon-pink);
+	}
+	.social-link:nth-child(2) {
+		animation-delay: 0.3s;
+		border-left-color: var(--accent-neon-blue);
+	}
+	.social-link:nth-child(3) {
+		animation-delay: 0.5s;
+		border-left-color: var(--accent-neon-green);
+	}
+
+	/* Colores específicos para cada red */
+	.social-link:nth-child(1) i {
+		color: var(--accent-neon-pink); /* YouTube */
+	}
+
+	.social-link:nth-child(2) i {
+		color: var(--accent-neon-blue); /* TikTok */
+	}
+
+	.social-link:nth-child(3) i {
+		color: var(--accent-neon-green); /* GitHub */
+	}
+
+	/* Estilos para las estadísticas */
+
+
+	/* Responsive design */
+	@media (max-width: 768px) {
+		.container {
+			padding: 20px;
+		}
+
+		.profile-pic {
+			width: 120px;
+			height: 120px;
+		}
+
+		h1 {
+			font-size: 1.8rem;
+		}
+
+		.bio-text {
+			font-size: 1rem;
+		}
+	}
+
+	@media (min-width: 769px) {
+		.links-container {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 15px;
+		}
+
+		.container {
+			padding: 40px;
+		}
+	}
+</style>

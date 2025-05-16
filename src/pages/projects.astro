@@ -1,0 +1,388 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+// Obtener todos los proyectos de la colección
+const proyectos = await getCollection('projects');
+---
+
+<Layout>
+    <section class="proyectos-container">
+        <h1 class="proyectos-titulo">Mis Proyectos</h1>
+        <p class="proyectos-subtitulo">Una selección de mis trabajos más recientes</p>
+        
+        <!-- Contenedor de proyectos con animación al cargar -->
+        <div class="proyectos-grid">
+            {proyectos.map((proyecto, index) => (
+                <div class="proyecto-card" style={`--order: ${index};`}>
+                    <div class="proyecto-imagen">
+                        <img src={proyecto.data.image} alt={proyecto.data.title} />
+                    </div>
+                    <div class="proyecto-info">
+                        <h3>{proyecto.data.title}</h3>
+                        <p class="proyecto-descripcion">
+                            {proyecto.data.descricionCorta}
+                        </p>
+                        <div class="proyecto-tags">
+                            {proyecto.data.tags.map((tag) => (
+                                <span class="tag">{tag}</span>
+                            ))}
+                        </div>
+                        <a href={`/proyecto/${proyecto.slug}`} class="btn-ver-mas">Ver más</a>
+                    </div>
+                </div>
+            ))}
+            
+            <!-- Si no hay proyectos, mostrar mensaje -->
+            {proyectos.length === 0 && (
+                <div class="no-proyectos">
+                    <p>No hay proyectos disponibles en este momento.</p>
+                </div>
+            )}
+        </div>
+    </section>
+</Layout>
+
+<style>
+    /* Estilos específicos para la página de proyectos */
+    
+    /* Títulos de la sección */
+    .proyectos-titulo {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
+        animation: fadeInUp 0.8s ease-out;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        position: relative;
+        display: inline-block;
+        background: linear-gradient(
+            90deg,
+            var(--accent-neon-blue),
+            var(--accent-neon-pink)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 0 auto 0.5rem;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .proyectos-subtitulo {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        color: var(--text-secondary);
+    }
+
+    /* Hero section */
+    .proyectos-hero {
+        padding: 4rem 1rem;
+        text-align: center;
+        background: linear-gradient(
+            135deg,
+            var(--accent-neon-blue) 0%,
+            var(--accent-neon-purple) 100%
+        );
+        color: white;
+        margin-bottom: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        animation: fadeIn 1.5s;
+    }
+
+    .proyectos-hero h1 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        animation: fadeInUp 0.8s ease-out;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        position: relative;
+        display: inline-block;
+    }
+
+    .proyectos-hero h1::after {
+        content: "";
+        position: absolute;
+        width: 50%;
+        height: 4px;
+        bottom: -5px;
+        left: 25%;
+        background: linear-gradient(
+            90deg,
+            var(--accent-neon-pink),
+            var(--accent-neon-green)
+        );
+    }
+
+    .proyectos-hero p {
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto;
+        animation: fadeInUp 1s ease-out;
+        color: var(--text-secondary);
+    }
+
+    /* Grid de proyectos */
+    .proyectos-container {
+        padding: 1rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .proyectos-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    /* Tarjetas de proyectos */
+    .proyecto-card {
+        background-color: var(--card-bg, #1a1a1a);
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+        opacity: 0;
+        animation: fadeInUp 0.5s ease-out forwards;
+        animation-delay: calc(var(--order) * 0.2s);
+        border-left: 4px solid transparent;
+        position: relative;
+    }
+
+    .proyecto-card::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(
+            45deg,
+            transparent,
+            rgba(56, 189, 248, 0.1),
+            transparent
+        );
+        transform: rotate(45deg);
+        animation: shineEffect 3s linear infinite;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .proyecto-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2);
+        border-left: 4px solid var(--accent-neon-blue);
+    }
+
+    .proyecto-imagen {
+        height: 200px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .proyecto-imagen::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 30%;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+        z-index: 1;
+    }
+
+    .proyecto-imagen img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .proyecto-card:hover .proyecto-imagen img {
+        transform: scale(1.1);
+    }
+
+    .proyecto-info {
+        padding: 1.5rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    .proyecto-info h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-primary, #ffffff);
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        background: linear-gradient(
+            90deg,
+            var(--accent-neon-blue),
+            var(--accent-neon-pink)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .proyecto-descripcion {
+        color: var(--text-secondary, #cccccc);
+        margin-bottom: 0.8rem;
+        font-size: 0.9rem;
+    }
+    
+    /* Estilos para las etiquetas de proyectos */
+    .proyecto-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .tag {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: rgba(56, 189, 248, 0.15);
+        color: var(--accent-neon-blue);
+        transition: all 0.3s ease;
+    }
+    
+    .tag:hover {
+        background: rgba(56, 189, 248, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    /* Estilos para mensaje de no proyectos */
+    .no-proyectos {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 3rem;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+        color: var(--text-secondary);
+    }
+
+    .btn-ver-mas {
+        display: inline-block;
+        padding: 0.5rem 1.2rem;
+        background: linear-gradient(
+            45deg,
+            var(--accent-neon-blue),
+            var(--accent-neon-purple)
+        );
+        color: white;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+        box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.8rem;
+    }
+
+    .btn-ver-mas:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 0 15px var(--accent-neon-pink);
+        background: linear-gradient(
+            45deg,
+            var(--accent-neon-purple),
+            var(--accent-neon-pink)
+        );
+    }
+
+
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes pulseButton {
+        0% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes shineEffect {
+        0% {
+            left: -100%;
+        }
+        100% {
+            left: 100%;
+        }
+    }
+
+    /* Retrasos para cada tarjeta */
+    .proyecto-card:nth-child(1) {
+        border-left-color: var(--accent-neon-pink);
+    }
+    .proyecto-card:nth-child(2) {
+        border-left-color: var(--accent-neon-blue);
+    }
+    .proyecto-card:nth-child(3) {
+        border-left-color: var(--accent-neon-green);
+    }
+    .proyecto-card:nth-child(4) {
+        border-left-color: var(--accent-neon-purple);
+    }
+
+    /* Media queries para responsive */
+    @media (min-width: 768px) {
+        .proyectos-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .proyectos-hero h1 {
+            font-size: 3rem;
+        }
+
+        .btn-ver-mas {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .proyectos-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .proyecto-imagen {
+            height: 220px;
+        }
+    }
+</style>

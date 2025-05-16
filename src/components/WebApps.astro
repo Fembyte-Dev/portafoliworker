@@ -1,0 +1,88 @@
+---
+import ServiceCard from './ServiceCard.astro';
+---
+
+<div class="webapps-section">
+  <h2 class="section-title">Aplicaciones Web Personalizadas</h2>
+  <p class="section-subtitle">Soluciones escalables hechas a la medida de tu negocio</p>
+  
+  <div class="webapps-grid">
+    <ServiceCard 
+      title="Soluciones escalables" 
+      description="Desarrollamos aplicaciones web a la medida de tu negocio que crecen junto con tus necesidades, garantizando un rendimiento óptimo incluso con grandes volúmenes de datos." 
+      icon="fas fa-arrows-alt"
+    />
+    
+    <ServiceCard 
+      title="Tecnologías avanzadas" 
+      description="Utilizamos las tecnologías más potentes del mercado: React, Node.js, Laravel, Vue.js, Python, bases de datos seguras y más, seleccionando siempre la mejor opción para tu proyecto." 
+      icon="fas fa-bolt"
+    />
+    
+    <ServiceCard 
+      title="Optimización total" 
+      description="Priorizamos el rendimiento, la seguridad y la experiencia del usuario en cada aplicación que desarrollamos, asegurando tiempos de carga rápidos y protección contra vulnerabilidades." 
+      icon="fas fa-tachometer-alt"
+    />
+    
+    <ServiceCard 
+      title="Interfaces intuitivas" 
+      description="Diseñamos interfaces de usuario modernas e intuitivas que facilitan la navegación y mejoran la productividad de tus equipos o clientes." 
+      icon="fas fa-laptop-code"
+    />
+  </div>
+</div>
+
+<style>
+  .webapps-section {
+    margin: 50px 0;
+    animation: fadeIn 1s ease-in-out;
+    position: relative;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .webapps-section::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent-neon-blue), var(--accent-neon-pink));
+    border-radius: 2px;
+  }
+  
+  .section-subtitle {
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+    font-weight: 300;
+  }
+  
+  .section-title {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+    text-align: center;
+    text-shadow: 0 0 10px var(--accent-neon-blue);
+    letter-spacing: 1px;
+  }
+  
+  .webapps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .webapps-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

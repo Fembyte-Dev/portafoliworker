@@ -1,0 +1,267 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+// Obtener el slug del proyecto de los parámetros de la URL
+export async function getStaticPaths() {
+  const proyectos = await getCollection('projects');
+  return proyectos.map(proyecto => ({
+    params: { slug: proyecto.slug },
+    props: { proyecto }
+  }));
+}
+
+// Obtener el proyecto de las props
+const { proyecto } = Astro.props;
+const { Content } = await proyecto.render();
+---
+
+<Layout>
+  <div class="proyecto-detalle">
+    <a href="/projects" class="volver-btn">
+      <i class="fas fa-arrow-left"></i> Volver a proyectos
+    </a>
+    
+    <div class="proyecto-header">
+      <h1>{proyecto.data.title}</h1>
+      
+      <div class="proyecto-tags">
+        {proyecto.data.tags.map((tag) => (
+          <span class="tag">{tag}</span>
+        ))}
+      </div>
+      
+      <div class="proyecto-links">
+        {proyecto.data.links.github && (
+          <a href={proyecto.data.links.github} target="_blank" class="proyecto-link github">
+            <i class="fab fa-github"></i> Ver en GitHub
+          </a>
+        )}
+        
+        {proyecto.data.links.demo && proyecto.data.links.demo !== "null" && (
+          <a href={proyecto.data.links.demo} target="_blank" class="proyecto-link demo">
+            <i class="fas fa-external-link-alt"></i> Ver demo
+          </a>
+        )}
+      </div>
+    </div>
+    
+    <div class="proyecto-imagen-principal">
+      <img src={proyecto.data.image} alt={proyecto.data.title} />
+    </div>
+    
+    <div class="proyecto-descripcion">
+      <p class="descripcion-completa">{proyecto.data.description}</p>
+    </div>
+    
+    <div class="proyecto-contenido">
+      <Content />
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .proyecto-detalle {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+  
+  .volver-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 30px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+  
+  .volver-btn:hover {
+    background: rgba(56, 189, 248, 0.2);
+    color: var(--accent-neon-blue);
+    transform: translateX(-5px);
+  }
+  
+  .proyecto-header {
+    margin-bottom: 2rem;
+  }
+  
+  .proyecto-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    background: linear-gradient(
+      90deg,
+      var(--accent-neon-blue),
+      var(--accent-neon-pink)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .proyecto-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tag {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: rgba(56, 189, 248, 0.15);
+    color: var(--accent-neon-blue);
+    transition: all 0.3s ease;
+  }
+  
+  .proyecto-links {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .proyecto-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1.2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+  
+  .proyecto-link.github {
+    background: #24292e;
+    color: white;
+  }
+  
+  .proyecto-link.demo {
+    background: linear-gradient(
+      45deg,
+      var(--accent-neon-blue),
+      var(--accent-neon-purple)
+    );
+    color: white;
+  }
+  
+  .proyecto-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .proyecto-imagen-principal {
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  .proyecto-imagen-principal img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .descripcion-completa {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    border-left: 4px solid var(--accent-neon-blue);
+  }
+  
+  .proyecto-contenido {
+    line-height: 1.6;
+  }
+  
+  .proyecto-contenido :global(h2),
+  .proyecto-contenido :global(h3) {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+  }
+  
+  .proyecto-contenido :global(h2) {
+    font-size: 1.8rem;
+    border-bottom: 2px solid rgba(56, 189, 248, 0.3);
+    padding-bottom: 0.5rem;
+  }
+  
+  .proyecto-contenido :global(h3) {
+    font-size: 1.4rem;
+    color: var(--accent-neon-blue);
+  }
+  
+  .proyecto-contenido :global(ul),
+  .proyecto-contenido :global(ol) {
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .proyecto-contenido :global(li) {
+    margin-bottom: 0.5rem;
+  }
+  
+  .proyecto-contenido :global(p) {
+    margin-bottom: 1rem;
+  }
+  
+  .proyecto-contenido :global(img) {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+  }
+  
+  .proyecto-contenido :global(code) {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.9em;
+  }
+  
+  .proyecto-contenido :global(pre) {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+  
+  .proyecto-contenido :global(pre code) {
+    background: transparent;
+    padding: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .proyecto-header h1 {
+      font-size: 2rem;
+    }
+    
+    .proyecto-links {
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    
+    .proyecto-link {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

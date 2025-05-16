@@ -1,0 +1,196 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WebServices from '../components/WebServices.astro';
+import WebApps from '../components/WebApps.astro';
+---
+
+<Layout>
+	<div class="contact-container">
+		<header>
+			<div class="logo">Fem<span>byte</span></div>
+		</header>
+
+		<h1 class="contact-title">contratame</h1>
+		
+		<div class="intro-message">
+			<h2>¿Qué puedo hacer por ti?</h2>
+			<p>Si necesitas un sitio web moderno, funcional y a medida, o deseas desarrollar una aplicación web compleja para tu empresa o negocio, ¡estás en el lugar correcto!</p>
+			<p>Cada proyecto es único, y por eso trabajo contigo para entender tus necesidades, diseñar soluciones a medida y entregar resultados profesionales que impulsen tu presencia digital.</p>
+		</div>
+
+		<WebServices />
+        <WebApps />
+
+        <!-- precios  -->
+		<div class="pricing-section">
+			<h2 class="pricing-title">💸 Precios Ajustados a Tus Necesidades</h2>
+			<div class="pricing-content">
+				<p>Cotizaciones completamente personalizadas según tu presupuesto y objetivos.</p>
+				<p>Trato directo, sin intermediarios y con transparencia en cada paso del proceso.</p>
+			</div>
+		</div>
+
+		<div class="contact-info">
+			<div class="contact-item">
+				<i class="fas fa-envelope"></i>
+				<span>fembytedev@gmail.com</span>
+			</div>
+			<div class="contact-item">
+				<i class="fas fa-map-marker-alt"></i>
+				<span>Tlaxcala, México</span>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.contact-container {
+		width: 100%;
+		max-width: 800px;
+		background-color: var(--bg-secondary);
+		border-radius: 15px;
+		padding: 30px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+		text-align: center;
+	}
+
+	header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 30px;
+	}
+
+	.logo {
+		font-family: "Montserrat", sans-serif;
+		font-size: 2rem;
+		font-weight: 700;
+		color: var(--text-primary);
+	}
+
+	.logo span {
+		color: var(--accent-neon-blue);
+	}
+
+	.contact-title {
+		font-size: 2.5rem;
+		margin-bottom: 20px;
+		color: var(--text-primary);
+		text-shadow: 0 0 10px var(--accent-neon-pink);
+		animation: glow 1.5s ease-in-out infinite alternate;
+	}
+
+	@keyframes glow {
+		from {
+			text-shadow: 0 0 5px var(--accent-neon-pink), 0 0 10px var(--accent-neon-pink);
+		}
+		to {
+			text-shadow: 0 0 10px var(--accent-neon-pink), 0 0 20px var(--accent-neon-pink);
+		}
+	}
+
+	.intro-message {
+		text-align: left;
+		margin-bottom: 40px;
+		padding: 20px;
+		background-color: var(--card-bg);
+		border-radius: 10px;
+		border-left: 4px solid var(--accent-neon-blue);
+		animation: fadeIn 1s ease-in-out;
+	}
+
+	@keyframes fadeIn {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.intro-message h2 {
+		color: var(--accent-neon-blue);
+		margin-bottom: 15px;
+		font-size: 1.5rem;
+	}
+
+	.intro-message p {
+		color: var(--text-secondary);
+		margin-bottom: 15px;
+		line-height: 1.6;
+	}
+
+	.pricing-section {
+		margin: 40px 0;
+		padding: 25px;
+		background-color: var(--card-bg);
+		border-radius: 10px;
+		border-left: 4px solid var(--accent-neon-green);
+		animation: fadeIn 1s ease-in-out;
+	}
+
+	.pricing-title {
+		color: var(--accent-neon-green);
+		margin-bottom: 20px;
+		font-size: 1.8rem;
+		text-align: left;
+		text-shadow: 0 0 8px var(--accent-neon-green);
+	}
+
+	.pricing-content {
+		text-align: left;
+	}
+
+	.pricing-content p {
+		color: var(--text-secondary);
+		margin-bottom: 15px;
+		line-height: 1.6;
+		position: relative;
+		padding-left: 20px;
+	}
+
+	.pricing-content p:before {
+		content: '✓';
+		position: absolute;
+		left: 0;
+		color: var(--accent-neon-green);
+	}
+
+	.contact-info {
+		display: flex;
+		justify-content: space-around;
+		flex-wrap: wrap;
+		margin-top: 40px;
+		padding-top: 30px;
+		border-top: 1px solid var(--divider);
+	}
+
+	.contact-item {
+		display: flex;
+		align-items: center;
+		margin: 10px 0;
+	}
+
+	.contact-item i {
+		color: var(--accent-neon-green);
+		font-size: 1.2rem;
+		margin-right: 10px;
+	}
+
+	@media (max-width: 768px) {
+		.contact-container {
+			padding: 20px;
+		}
+
+		.contact-info {
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.contact-item {
+			margin: 15px 0;
+		}
+	}
+</style>
