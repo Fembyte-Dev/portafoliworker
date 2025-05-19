@@ -3,7 +3,7 @@ title: "Gestion de carpinteria"
 descricionCorta: "Una aplicación web para gestionar los clientes, poryectos y gastos de una carpinteria. Un proyecto desarrollado con Python y Flask."
 description: "Está diseñada para ayudar a carpinterías locales a optimizar la gestión de sus proyectos. Permite llevar un registro detallado de los gastos asociados a cada proyecto, facilitando el cálculo de ganancias. Además, incluye herramientas para gestionar gastos indirectos y generar reportes mensuales, para ayudar al pago de impuestos en México."
 tags: ["web", "frontend", "fullstack"]
-image: "/src/assets/images/projects/proyecto-1.png"
+image: "https://github.com/Fembyte-Dev/portafoliworker/blob/main/src/assets/images/projects/proyecto-1.png?raw=true"
 links:
   github: "https://github.com/Fembyte-Dev/carpinteria-app"
   demo: "null"
